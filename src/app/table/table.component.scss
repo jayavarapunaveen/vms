@@ -1,0 +1,28 @@
+table th {
+    background-color: #000000;
+    color: white;
+  }
+ 
+  .text-hover{
+    &:hover{
+    color: #4a439a;
+    cursor: pointer;
+    }
+    }
+    
+    .active{
+      color: #fff!important;
+      cursor: default!important;
+      background-color: #4a439a;
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      line-height: 18px;
+      border-radius: 50%;
+      font-size: 1.25rem;      
+    }
+    .disabled{
+    color: #dadada !important;
+    cursor: not-allowed !important;
+    }
+    

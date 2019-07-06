@@ -1,0 +1,104 @@
+.form-group {
+  &.form-data {
+    position: relative;
+    z-index: 1;
+
+    .tooltip {
+      min-width: 150px;
+    }
+
+    &.form-active .form-control + .form-label,
+    &.form-active .form-control + .form-select {
+      color: #bbbbbb;
+      top: 0px;
+      z-index: 1;
+    }
+
+    .form {
+      &-control {
+        background: transparent; // &:valid + .form-label,
+
+        &:focus + .form-label,
+        &:focus + .form-select {
+          color: #4a439a;
+          top: 0px;
+          z-index: 1;
+        }
+      }
+
+      &-text {
+        position: absolute;
+        right: 0;
+      }
+
+      // &-control:not(:valid) + .form-label,
+      &-label {
+        color: #bbbbbb;
+        background: white;
+        position: absolute;
+        top: 50%;
+        padding: 0;
+        transform: translateY(-50%);
+        left: 0;
+        transition: all 0.2s;
+        z-index: -1;
+      }
+
+      &-select {
+        color: #bbbbbb;
+        background: white;
+        position: absolute;
+        top: 50%;
+        padding: 0 5px;
+        transform: translateY(-50%);
+        left: 15px;
+        transition: all 0.2s;
+        z-index: -1;
+      }
+    }
+  }
+}
+
+select {
+  border: 1px solid grey !important;
+  height: 34px !important;
+  padding: 2px !important;
+
+  &:focus {
+    border: 1px solid #4a439a !important;
+  }
+}
+
+.title {
+  // color:#ecec11
+  color:tomato
+}
+
+.subtitle {
+  color: black;
+  padding-left: 20px;
+}
+.label-required {
+  color: #ff6b83;
+}
+.btn {
+  text-transform: none
+}
+
+.btn-primary {
+  background-color: #4a439a !important;
+  cursor: pointer !important;
+  border-radius: 0.25rem !important;
+
+  &:active,
+  &:hover,
+  &.active,
+  &:focus {
+      background-color: #4a439a !important;
+  }
+
+  &.btn-add {
+      padding: 0.5rem !important;
+  }
+}
+

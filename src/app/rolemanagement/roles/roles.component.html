@@ -1,0 +1,142 @@
+<!-- <toaster-container [toasterconfig]="config"></toaster-container> -->
+<div class="d-flex">
+  <div [ngClass]="{'head_disable': !showTable}" class="h5 mb-30 f-18">
+    Role Management<span class="mx-1" *ngIf="!showTable">/</span><button *ngIf="showTable" class="btn btn-small mx-2"
+      (click)="openInstruction()"><i class="fas fa-info-circle"></i></button></div>
+  <div class="mx-3 h5 f-18 mb-30" *ngIf="!showTable && !viewCheck">Edit Role</div>
+  <div class="mx-3 h5 f-18 mb-30" *ngIf="!showTable && viewCheck">View Role
+    <span *ngIf="status=='A'" class="mx-3 btn-view"><i class="fa fa-pen" (click)="navigateToEdit()"></i></span>
+  </div>
+</div>
+
+<div *ngIf="showTable" class="d-flex justify-content-end align-items-end search-label">
+  <div>
+    <div>
+      <select class="form-control" [(ngModel)]="status"
+        (change)="getRoles($event.target.value);this.global.inputchange($event)" name="status">
+        <option value='A'>Active</option>
+        <option value='I'>Inactive</option>
+      </select>
+    </div>
+  </div>
+  <div class="pl-3">
+    <button class="btn btn-sm btn-primary btn-add" (click)="addrole()"><i class="fas fa-plus align-middle"></i><span
+        class="mx-1 d-inline-block align-middle">Add</span></button>
+  </div>
+</div>
+
+
+<ngx-table class="table-move-upper" *ngIf="showTable" [tableHeaders]="[
+                    {'headTitle':'roleID','bodyTitle':'role_name',type:'Index'},
+                    {'headTitle':'name','bodyTitle':'role_name',type:'String'},
+                    {'headTitle':'description','bodyTitle':'role_desc',type:'String'},
+                    {'headTitle':'modules','bodyTitle':'modules','type':'String'},
+                    {'headTitle':'actions','type':'Button','bodyTitle':'params'                  
+                  }]" [rowData]="pipe_res" (editTab)="editTab($event)" (viewTab)="viewTab($event)"
+  (deleteTab)="deleteTab($event)">
+</ngx-table>
+<!-- </div> -->
+<div class="card" *ngIf="!showTable">
+  <div class="card-body p-40">
+    <div *ngIf="!viewCheck">
+      <form #editForm="ngForm">
+        <div class="h5 mb-20 f-16">Basic</div>
+        <div class="row flex-column">
+
+          <div class="col-md-4">
+            <div class="form-group form-data mb-20" [ngClass]="{'form-active':editCheck || viewCheck}">
+              <input type="text" class="filter-input form-control" (change)="this.global.inputchange($event)"
+                [(ngModel)]="editroleData.role_name" #rolename="ngModel" nbInput type="text" name="name" maxlength="15"
+                required>
+              <label class="form-label">roleName<span
+                  class="mx-1 label-required">*</span></label>
+              <small class="form-text error" *ngIf="rolename.invalid&&rolename.touched">
+                required
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group form-data" [ngClass]="{'form-active':editCheck || viewCheck}">
+              <input class="form-control" [(ngModel)]="editroleData.role_desc"
+                (change)="this.global.inputchange($event)" name="desc" maxlength="50" #roledesc="ngModel">
+              <label class="form-label">roleDescription</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="h5 f-16 m-0 pr-3 mt-30">
+          Select_Module
+        </div>
+        <div class="d-flex justify-content-between m-0">
+          <div class="w-25">
+            <div class="form-group form-data">
+              <input type="text" name="hello" class="form-control" placeholder="Type here to search modules" nbInput
+                [(ngModel)]="searchString">
+              <!-- <label class="form-label">type_here_to_search_module</label> -->
+              <label class="module-search-icon"><i class="fas fa-search fontsize"></i></label>
+            </div>
+          </div>
+          <div>
+            <div class="text-right custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" value="hello" name="selectall" id="hello"
+                (change)="selectAll()" [(ngModel)]="selectedAll">
+              <label for="hello" class="custom-control-label mx-2">Select_All</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row m-0">
+          <div class="custom-control custom-checkbox col-lg-3 col-md-4 col-sm-6 text-truncate"
+            *ngFor="let module of moduleData|multiselectfilter:searchString; let i=index">
+            <input type="checkbox" name="ind{{module.module_id}}" id="ind{{i}}" [(ngModel)]="module['checked']"
+              class="custom-control-input multiselect mb-20">
+            <label for="ind{{i}}" class="custom-control-label mx-2">{{module.module_name}}</label>
+          </div>
+        </div>
+        <div class="mt-20 text-left" id="footerButton">
+          <button type="submit" *ngIf="!viewCheck" [disabled]="!editForm.valid" class="btn btn-sm btn-primary f-16"
+            (click)="save()">save</button>
+          <button type="button" class="mx-3 btn btn-sm btn-outline-primary f-16"
+            (click)="cancel(editForm.dirty)">cancel</button>
+        </div>
+
+
+      </form>
+    </div>
+
+    <div *ngIf="viewCheck">
+      <div class="h5 mb-20 f-16">
+        Basic
+      </div>
+      <div class="d-flex flex-column">
+        <div class="mb-10">
+          <label>roleName</label>
+          <div class="f-16">{{editroleData.role_name}}</div>
+        </div>
+        <div class="mb-10">
+          <label>roleDescription</label>
+          <div class="f-16">{{editroleData.role_desc}}</div>
+        </div>
+        <div class="h5 mb-20 mt-10 f-16">
+          Selected_Module
+        </div>
+
+
+        <div class="row mb-20">
+          <div [ngClass]="{'col-lg-2 col-md-4 col-sm-6': modules.length > 8,'col-12':!(modules.length > 8)}"
+            *ngFor="let module of modules">
+            <div class="f-14 mb-10 mx-2">{{module.name}}</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="text-left">
+        <button type="button" class="btn btn-sm btn-primary f-16" (click)="cancel(false)">back</button>
+      </div>
+
+
+    </div>
+
+  </div>
+</div>

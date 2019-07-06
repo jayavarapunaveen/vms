@@ -1,0 +1,145 @@
+<div class="container" *ngIf="!thankYouPage">
+    <h3 class="text-center title reg-align">Pre-Registration</h3>
+    <form #newform="ngForm">
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-4">
+                <div class="form-group form-data">
+                    <input type="text" class="form-control" name="fullname" required #fullName="ngModel"
+                        (change)="this.global.inputchange($event)" class="form-control"
+                        [(ngModel)]="registrationDetials.fullName" maxlength="90">
+                    <label class="form-select">Full Name <span class="mx-1 label-required">*</span></label>
+                    <small class="form-text error" *ngIf="fullName.invalid&&fullName.touched" translate>required</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group form-data">
+                    <input class="form-control" name="wnumber" (change)="this.global.inputchange($event)" required
+                        #idnum="ngModel" [(ngModel)]="registrationDetials.idNumber">
+
+                    <label class="form-select">ID Number/FIN Number/Password <span
+                            class="mx-1 label-required">*</span></label>
+                    <small class="form-text error" *ngIf="idnum.invalid&&idnum.touched" translate>required</small>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mb-3">
+
+
+            <div class="col-md-4">
+                <div class="form-group form-data form-active">
+                    <input class="form-control" (change)="this.global.inputchange($event)" type="date"
+                        name="expiryDateWork" [(ngModel)]="registrationDetials.expiryDateWork">
+                    <label class="form-select">Expiry Date of Work </label>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group form-data form-active">
+                    <input class="form-control" (change)="this.global.inputchange($event)" type="date"
+                        #dateofconstruction="ngModel" name="expiryDateConstruction" required
+                        [(ngModel)]="registrationDetials.expiryDateConstruction">
+                    <label class="form-select">Expiry Date of Construction
+                        <span class="mx-1 label-required">*</span></label>
+                    <small class="form-text error" *ngIf="dateofconstruction.invalid&&dateofconstruction.touched"
+                        translate>required</small>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-4">
+                <div class="form-group form-data form-active">
+                    <input class="form-control" (change)="this.global.inputchange($event)" type="date" required
+                        #dateofbirth="ngModel" name="date_of_birth" [(ngModel)]="registrationDetials.dateOfBirth">
+                    <label class="form-select">Date Of Birth<span class="mx-1 label-required">*</span></label>
+                    <small class="form-text error" *ngIf="dateofbirth.invalid&&dateofbirth.touched"
+                        translate>required</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group form-data">
+                    <input class="form-control" name="Nationality" (change)="this.global.inputchange($event)" required
+                        #nationality="ngModel" [(ngModel)]="registrationDetials.nationality">
+                    <label class="form-select">Nationality
+                        <span class="mx-1 label-required">*</span></label>
+                    <small class="form-text error" *ngIf="nationality.invalid&&nationality.touched"
+                        translate>required</small>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-4">
+                <div class="form-group form-data">
+                    <input type="text" class="form-control" name="nameoftwrpcontract" required
+                        (change)="this.global.inputchange($event)" class="form-control" #nameoftwrp="ngModel"
+                        [(ngModel)]="registrationDetials.nameOfTwrpContract" maxlength="90">
+                    <label class="form-select">Name of TWRP Contract
+
+                        <span class="mx-1 label-required">*</span></label>
+                    <small class="form-text error" *ngIf="nameoftwrp.invalid&&nameoftwrp.touched"
+                        translate>required</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group form-data">
+                    <input class="form-control" name="Employer" #employer="ngModel"required
+                        (change)="this.global.inputchange($event)" [(ngModel)]="registrationDetials.employer">
+
+                    <label class="form-select">Employer/Name of Company
+                        <span class="mx-1 label-required">*</span></label>
+                    <small class="form-text error" *ngIf="employer.invalid&&employer.touched" translate>required</small>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-4">
+                <div class="form-group form-data">
+                    <input type="text" class="form-control" name="Designation" required #designation="ngModel"
+                        (change)="this.global.inputchange($event)" class="form-control"
+                        [(ngModel)]="registrationDetials.designation" maxlength="90">
+                    <label class="form-select">Job Appointment/Designation
+                        <span class="mx-1 label-required">*</span></label>
+                    <small class="form-text error" *ngIf="designation.invalid&&designation.touched"
+                        translate>required</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group form-data">
+                    <input class="form-control" name="ContractNumber" (change)="this.global.inputchange($event)" required
+                        #contractnumber="ngModel" [(ngModel)]="registrationDetials.contractNumber">
+
+                    <label class="form-select">Contract Number
+                        <span class="mx-1 label-required">*</span></label>
+                    <small class="form-text error" *ngIf="contractnumber.invalid&&contractnumber.touched"
+                        translate>required</small>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="text-center">
+        <button class="btn btn-sm btn-primary f-16 m-4" [disabled]="!newform.form.valid"
+            (click)="saveRegistration()">
+            Save </button>
+        <button class="btn btn-sm btn-primary f-16" (click)="reset()"> Reset </button>
+    </div>
+
+</div>
+<div class="row justify-content-center mb-3 align-items-center card-align" *ngIf="thankYouPage">
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-body mb-4">
+                <img src="http://assets.stickpng.com/thumbs/5aa78e387603fc558cffbf1d.png" alt="" class="center">
+                <div class="h5 text-center color-green">Thank You</div>
+                <div class="h5 text-center">Registration Successful
+                </div>
+                Your registration under approval process.
+                You will receive email/SMS notification.
+
+
+            </div>
+        </div>
+    </div>
+</div>
